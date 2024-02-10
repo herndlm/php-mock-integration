@@ -17,8 +17,6 @@ class MockDelegateFunctionBuilderTest extends TestCase
 
     /**
      * Test build() defines a class.
-     *
-     * @test
      */
     public function testBuild()
     {
@@ -29,8 +27,6 @@ class MockDelegateFunctionBuilderTest extends TestCase
 
     /**
      * Test build() would never create the same class name for different signatures.
-     *
-     * @test
      */
     public function testDiverseSignaturesProduceDifferentClasses()
     {
@@ -41,11 +37,11 @@ class MockDelegateFunctionBuilderTest extends TestCase
 
         $builder->build('f1');
         $class2 = $builder->getFullyQualifiedClassName();
-        
+
         $builder2 = new MockDelegateFunctionBuilder();
         $builder2->build('f2');
         $class3 = $builder2->getFullyQualifiedClassName();
-        
+
         $this->assertNotEquals($class1, $class2);
         $this->assertNotEquals($class1, $class3);
         $this->assertNotEquals($class2, $class3);
@@ -53,8 +49,6 @@ class MockDelegateFunctionBuilderTest extends TestCase
 
     /**
      * Test build() would create the same class name for identical signatures.
-     *
-     * @test
      */
     public function testSameSignaturesProduceSameClass()
     {
@@ -62,17 +56,15 @@ class MockDelegateFunctionBuilderTest extends TestCase
 
         $builder->build('f1');
         $class1 = $builder->getFullyQualifiedClassName();
-        
+
         $builder->build('f1');
         $class2 = $builder->getFullyQualifiedClassName();
-        
+
         $this->assertEquals($class1, $class2);
     }
-    
+
     /**
      * Tests declaring a class with enabled backupStaticAttributes.
-     *
-     * @test
      * @backupStaticAttributes enabled
      * @dataProvider provideTestBackupStaticAttributes
      *
@@ -83,7 +75,7 @@ class MockDelegateFunctionBuilderTest extends TestCase
         $builder = new MockDelegateFunctionBuilder();
         $builder->build("min");
     }
-    
+
     /**
      * Just repeat testBackupStaticAttributes a few times.
      *
@@ -100,29 +92,17 @@ class MockDelegateFunctionBuilderTest extends TestCase
     /**
      * Tests deserialization.
      *
-     * @test
      * @runInSeparateProcess
-     * @dataProvider provideTestDeserializationInNewProcess
      *
      * @doesNotPerformAssertions
      */
-    public function testDeserializationInNewProcess($data)
-    {
-        unserialize($data);
-    }
-    
-    /**
-     * Returns test cases for testDeserializationInNewProcess().
-     *
-     * @return array Test cases.
-     */
-    public function provideTestDeserializationInNewProcess()
+    public function testDeserializationInNewProcess()
     {
         $builder = new MockDelegateFunctionBuilder();
         $builder->build("min");
-        
-        return [
-            [serialize($this->getMockForAbstractClass($builder->getFullyQualifiedClassName()))]
-        ];
+
+        $data = serialize($this->getMockForAbstractClass($builder->getFullyQualifiedClassName()));
+
+        unserialize($data);
     }
 }

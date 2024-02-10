@@ -32,8 +32,6 @@ class MockDelegateFunctionTest extends TestCase
 
     /**
      * Tests delegate() returns the mock's result.
-     *
-     * @test
      */
     public function testDelegateReturnsMockResult()
     {
@@ -50,8 +48,6 @@ class MockDelegateFunctionTest extends TestCase
 
     /**
      * Tests delegate() forwards the arguments.
-     *
-     * @test
      */
     public function testDelegateForwardsArguments()
     {
